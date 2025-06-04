@@ -1,0 +1,65 @@
+/**a comment*/
+class Main {
+   static int WIDTH;
+   static int HEIGHT;
+   static int SIZE;
+
+   function void main() {
+/*     var int y;
+      var int x;
+      var int firstX;
+      let WIDTH = 512;
+      let HEIGHT = 256;
+      let SIZE = 8;
+      let y = 0;
+      let x = 0;
+      let firstX = 0;
+      do Screen.clearScreen();
+      do Screen.setColor(true);
+      while (y < HEIGHT) {
+         while (x < WIDTH) {
+            do Screen.drawRectangle(x, y, x + SIZE - 1, y + SIZE - 1);
+            let x = x + (SIZE * 2);
+         }
+         let y = y + SIZE;
+         if (firstX = 0){
+            let firstX = SIZE;
+         }else {
+            let firstX = 0;
+         }
+         let x = firstX;
+      }     
+      
+      return;*/
+    //var String s1;
+    //var String s2;
+    //let s1 = "Hello";
+    //let s2 = " World!!!";
+    do Output.moveCursor(10,10);
+    //do Output.printString(Main.stringAppend(s1,s2));
+    do Output.printString(Main.stringAppend("dogs la la la", " fruitcake mormon"));
+    return;
+   }
+
+
+   function String stringAppend(String s1, String s2){
+      var String res;
+      var int i;
+      var int s1Length;
+      var int s2Length;
+      let s1Length = s1.length();
+      let s2Length = s2.length();
+      let res = String.new(s1Length + s2Length);
+      let i = 0;
+      while (i < s1Length){
+         let res = res.appendChar(s1.charAt(i));
+         let i = i + 1;
+     }
+     let i = 0;
+     while (i < s2Length){
+        let res = res.appendChar(s2.charAt(i));
+        let i = i + 1;
+     }
+      return res;		
+   }
+}
