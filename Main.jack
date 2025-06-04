@@ -35,12 +35,61 @@ class Main {
     //var String s2;
     //let s1 = "Hello";
     //let s2 = " World!!!";
-    do Output.moveCursor(10,10);
+    //do Output.moveCursor(10,10);
     //do Output.printString(Main.stringAppend(s1,s2));
-    do Output.printString(Main.stringAppend("dogs la la la", " fruitcake mormon"));
-    return;
+   // do Output.printString(Main.stringAppend("dogs la la la", " fruitcake mormon"));
+      var Array a;
+      var boolean contains;
+      let a = Array.new(10);
+      let a[0] = 2;
+      let a[1] = 5;
+      let a[2]= 4;
+      let contains = Main.arrayContains(a, 3, 2);
+      do Output.moveCursor(10,10);
+      do Output.printString("Does the array contain the number? ");
+      do Output.printInt(contains);
+      return;
    }
 
+/*   function Array middleSquare(int seed){
+      var Array alreadySeen;
+      var int counter;
+      var number;
+      let alreadySeen = Array.new(1000);
+      let counter = 0;
+      let number = seed;
+      while (~(Main.arrayContains(alreadySeen, counter, number))){
+         let already_seen[counter] = number;
+         let counter = counter + 1;
+         var String s;
+         var String middleNumbers;
+         let s = Main.zFill(String.setInt(number * number));
+         let middleNumbers = Main.substring(2,5);
+         let number = middleNumbers.intValue();
+         
+      }
+      return alreadySeen;
+   }
+*/
+
+
+
+
+   function boolean arrayContains(Array array, int arrayLength, int val){
+      var int i;
+      let i = 0;
+      while (i < arrayLength) {
+         if (array[i] = val){
+            return true;
+         }
+      let i = i + 1;
+      }
+      return false;
+   }
+
+   function String substring(String s, int start, int end){
+         
+  }
 
    function String stringAppend(String s1, String s2){
       var String res;
