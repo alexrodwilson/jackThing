@@ -38,6 +38,7 @@ class Main {
     //do Output.moveCursor(10,10);
     //do Output.printString(Main.stringAppend(s1,s2));
    // do Output.printString(Main.stringAppend("dogs la la la", " fruitcake mormon"));
+ /*    
       var Array a;
       var boolean contains;
       let a = Array.new(10);
@@ -48,6 +49,13 @@ class Main {
       do Output.moveCursor(10,10);
       do Output.printString("Does the array contain the number? ");
       do Output.printInt(contains);
+*/
+      var String s;
+      let s = "Hello, world!";
+      do Output.moveCursor(10,10);
+      do Output.printString(Main.substring(s, 7, 12));
+      do Output.moveCursor(12,10);
+      do Output.printString(Main.zfill("25675", 8));
       return;
    }
 
@@ -72,9 +80,6 @@ class Main {
    }
 */
 
-
-
-
    function boolean arrayContains(Array array, int arrayLength, int val){
       var int i;
       let i = 0;
@@ -88,8 +93,31 @@ class Main {
    }
 
    function String substring(String s, int start, int end){
-         
-  }
+      var int i;
+      var String res;
+      let res = String.new(end - start);
+      let i = start;
+      while (i < end){
+         let res = res.appendChar(s.charAt(i));
+         let i = i + 1;       
+      }
+      return res;      
+   }
+   
+   function String zfill(String s, int targetLength){
+      var int zerosNeeded;
+      var String zeros;
+      var int i;
+      let zerosNeeded = targetLength - s.length();
+      let zeros = String.new(zerosNeeded);
+      let i = 0;
+      while (i < zerosNeeded){
+         let zeros = zeros.appendChar(48);
+         let i = i + 1;
+      }
+      return Main.stringAppend(zeros, s);
+   }
+
 
    function String stringAppend(String s1, String s2){
       var String res;
