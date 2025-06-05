@@ -38,7 +38,7 @@ class Main {
     //do Output.moveCursor(10,10);
     //do Output.printString(Main.stringAppend(s1,s2));
    // do Output.printString(Main.stringAppend("dogs la la la", " fruitcake mormon"));
- /*    
+ /* 
       var Array a;
       var boolean contains;
       let a = Array.new(10);
@@ -49,36 +49,16 @@ class Main {
       do Output.moveCursor(10,10);
       do Output.printString("Does the array contain the number? ");
       do Output.printInt(contains);
-*/
-      var String s;
-      let s = "Hello, world!";
-      do Output.moveCursor(10,10);
-      do Output.printString(Main.substring(s, 7, 12));
-      do Output.moveCursor(12,10);
-      do Output.printString(Main.zfill("25675", 8));
       return;
-   }
-
-/*   function Array middleSquare(int seed){
-      var Array alreadySeen;
-      var int counter;
-      var number;
-      let alreadySeen = Array.new(1000);
-      let counter = 0;
-      let number = seed;
-      while (~(Main.arrayContains(alreadySeen, counter, number))){
-         let already_seen[counter] = number;
-         let counter = counter + 1;
-         var String s;
-         var String middleNumbers;
-         let s = Main.zFill(String.setInt(number * number));
-         let middleNumbers = Main.substring(2,5);
-         let number = middleNumbers.intValue();
-         
-      }
-      return alreadySeen;
-   }
 */
+      var int c;
+      let c = Main.middleSquare(4179);
+      do Output.moveCursor(10,10);
+      do Output.printInt(c);
+      return;
+
+
+   }
 
    function boolean arrayContains(Array array, int arrayLength, int val){
       var int i;
@@ -103,8 +83,9 @@ class Main {
       }
       return res;      
    }
-   
-   function String zfill(String s, int targetLength){
+      
+
+   function String zFill(String s, int targetLength){
       var int zerosNeeded;
       var String zeros;
       var int i;
@@ -117,7 +98,6 @@ class Main {
       }
       return Main.stringAppend(zeros, s);
    }
-
 
    function String stringAppend(String s1, String s2){
       var String res;
@@ -139,4 +119,36 @@ class Main {
      }
       return res;		
    }
+   
+   function int middleSquare(int seed){
+      var Array alreadySeen;
+      var int counter;
+      var int number;
+      var String s;
+      var String middleNumbers;
+      var int number;
+      var Logger logger;
+      var String s;
+
+      let alreadySeen = Array.new(100);
+      let counter = 0;
+      let number = seed;
+      let logger = Logger.new();
+      while (~(Main.arrayContains(alreadySeen, counter, number))){
+         let alreadySeen[counter] = number;
+         
+         do logger.logInt("number added: ", number);
+         
+         let counter = counter + 1;
+         let s = String.new(8);
+         do s.setInt(number * number);
+         if (s.length() < 8){
+            let s = Main.zFill(s, 8);
+         }
+         let middleNumbers = Main.substring(s, 2, 6);
+         let number = middleNumbers.intValue();      
+      }
+      return number;
+   }
+
 }

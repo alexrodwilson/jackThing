@@ -1,0 +1,47 @@
+class Logger {
+   field int row;
+   field int COL;
+   static int DELAY;
+
+
+   constructor Logger new(){
+      let row = 0;
+      let COL = 0;
+      let DELAY = 800;
+      return this;
+   }
+
+   method void log(String s){
+      do Output.moveCursor(row, COL);
+      do Output.printString(s);
+      let row = row + 1;
+      if (row > 22){
+         let row = 0;
+         do Screen.clearScreen();
+         do Sys.wait(DELAY);
+      }
+      return;
+
+   }
+
+   method void logInt(String introS, int n){
+      
+      var String tempS;
+      let tempS = String.new(8);
+      do Output.moveCursor(row, COL);
+      do tempS.setInt(n);
+      do Output.printString(Main.stringAppend(introS, tempS));
+      let row = row + 1;
+      if (row > 22){
+         let row = 0;
+         do Screen.clearScreen();
+         do Sys.wait(DELAY);
+      }
+      return;
+   }
+   
+
+
+
+
+}
