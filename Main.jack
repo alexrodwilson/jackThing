@@ -1,154 +1,16 @@
-/**a comment*/
-class Main {
-   static int WIDTH;
-   static int HEIGHT;
-   static int SIZE;
-
-   function void main() {
-/*     var int y;
-      var int x;
-      var int firstX;
-      let WIDTH = 512;
-      let HEIGHT = 256;
-      let SIZE = 8;
-      let y = 0;
-      let x = 0;
-      let firstX = 0;
-      do Screen.clearScreen();
-      do Screen.setColor(true);
-      while (y < HEIGHT) {
-         while (x < WIDTH) {
-            do Screen.drawRectangle(x, y, x + SIZE - 1, y + SIZE - 1);
-            let x = x + (SIZE * 2);
-         }
-         let y = y + SIZE;
-         if (firstX = 0){
-            let firstX = SIZE;
-         }else {
-            let firstX = 0;
-         }
-         let x = firstX;
-      }     
+class Main{
+   function void main(){
+      var LFSR bin;
+      let bin = LFSR.decToBin(237, 15);
+      //let bin = LFSR.new(8);
       
-      return;*/
-    //var String s1;
-    //var String s2;
-    //let s1 = "Hello";
-    //let s2 = " World!!!";
-    //do Output.moveCursor(10,10);
-    //do Output.printString(Main.stringAppend(s1,s2));
-   // do Output.printString(Main.stringAppend("dogs la la la", " fruitcake mormon"));
- /* 
-      var Array a;
-      var boolean contains;
-      let a = Array.new(10);
-      let a[0] = 2;
-      let a[1] = 5;
-      let a[2]= 4;
-      let contains = Main.arrayContains(a, 3, 2);
-      do Output.moveCursor(10,10);
-      do Output.printString("Does the array contain the number? ");
-      do Output.printInt(contains);
-      return;
-*/
-      var int c;
-      let c = Main.middleSquare(4179);
-      do Output.moveCursor(10,10);
-      do Output.printInt(c);
-      return;
-
-
+      //do bin.build(0);
+      //do bin.build(1);
+      //do bin.build(0);
+      //do bin.build(1);
+      do Output.moveCursor(10, 30);
+      do bin.print();
+      do bin.dispose();
+      return;      
    }
-
-   function boolean arrayContains(Array array, int arrayLength, int val){
-      var int i;
-      let i = 0;
-      while (i < arrayLength) {
-         if (array[i] = val){
-            return true;
-         }
-      let i = i + 1;
-      }
-      return false;
-   }
-
-   function String substring(String s, int start, int end){
-      var int i;
-      var String res;
-      let res = String.new(end - start);
-      let i = start;
-      while (i < end){
-         let res = res.appendChar(s.charAt(i));
-         let i = i + 1;       
-      }
-      return res;      
-   }
-      
-
-   function String zFill(String s, int targetLength){
-      var int zerosNeeded;
-      var String zeros;
-      var int i;
-      let zerosNeeded = targetLength - s.length();
-      let zeros = String.new(zerosNeeded);
-      let i = 0;
-      while (i < zerosNeeded){
-         let zeros = zeros.appendChar(48);
-         let i = i + 1;
-      }
-      return Main.stringAppend(zeros, s);
-   }
-
-   function String stringAppend(String s1, String s2){
-      var String res;
-      var int i;
-      var int s1Length;
-      var int s2Length;
-      let s1Length = s1.length();
-      let s2Length = s2.length();
-      let res = String.new(s1Length + s2Length);
-      let i = 0;
-      while (i < s1Length){
-         let res = res.appendChar(s1.charAt(i));
-         let i = i + 1;
-     }
-     let i = 0;
-     while (i < s2Length){
-        let res = res.appendChar(s2.charAt(i));
-        let i = i + 1;
-     }
-      return res;		
-   }
-   
-   function int middleSquare(int seed){
-      var Array alreadySeen;
-      var int counter;
-      var int number;
-      var String s;
-      var String middleNumbers;
-      var int number;
-      var Logger logger;
-      var String s;
-
-      let alreadySeen = Array.new(100);
-      let counter = 0;
-      let number = seed;
-      let logger = Logger.new();
-      while (~(Main.arrayContains(alreadySeen, counter, number))){
-         let alreadySeen[counter] = number;
-         
-         do logger.logInt("number added: ", number);
-         
-         let counter = counter + 1;
-         let s = String.new(8);
-         do s.setInt(number * number);
-         if (s.length() < 8){
-            let s = Main.zFill(s, 8);
-         }
-         let middleNumbers = Main.substring(s, 2, 6);
-         let number = middleNumbers.intValue();      
-      }
-      return number;
-   }
-
 }

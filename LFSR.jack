@@ -1,0 +1,85 @@
+class LFSR{
+   field int currentBit;
+   field Array array;
+   field int nOfBits;
+
+
+   constructor LFSR new(int bits){
+      let currentBit = 0;
+      let nOfBits = bits;
+      let array = Array.new(nOfBits);
+      return this; 
+   }
+
+   method void dispose(){
+      do array.dispose();
+      do Memory.deAlloc(this);
+      return;    
+   }
+    
+   method int get(int index){
+      return array[index];
+   }
+
+   method void set(int val, int index){
+      let array[index] = val;
+      return;
+    }
+
+   method void build(int binDig){
+      if (~ ((binDig = 1)|(binDig = 0))){
+         do Sys.error(69);
+      }
+      let array[currentBit] = binDig;
+      let currentBit = currentBit + 1;
+      return;
+   }
+
+   method void print(){
+      var int i;
+      let i = 0;
+      
+      while (i < nOfBits){
+         do Output.printInt(get(i));
+         let i = i + 1;
+      }
+      return;
+   }
+
+   function LFSR decToBin(int dec, int bits){
+      var int msbVal;
+      var LFSR bin;
+      var int i;
+      let msbVal = LFSR.pow(2, bits - 1);
+      let bin = LFSR.new(bits);
+      if (dec = 0){
+         let i = 0;
+         while (i < bits){
+            do bin.build(0);
+            let i = i + 1;
+         }
+         return bin;
+      }
+      while (dec > 0){
+          if (~ (msbVal > dec)){
+             let dec = dec - msbVal;
+             do bin.build(1);
+          }
+          else{
+             do bin.build(0);
+          }
+          let msbVal = msbVal / 2;
+      }
+      return bin;
+    }
+
+   function int pow(int n, int exp){
+      if (exp = 0){
+         return 1;
+      }
+      else{
+         return n * LFSR.pow(n, exp - 1);
+      }
+   }
+
+}
