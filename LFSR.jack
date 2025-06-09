@@ -192,5 +192,19 @@ class LFSR{
          return shifted;
       }
    } 
+   
+   function boolean binEquals(LFSR binA, LFSR binB){
+      var int i;
+      var int bits;
+      let i = 0;
+      let bits = binA.getNOfBits();
+      while (i < bits){
+         if (~ (binA.get(i) = binB.get(i))) {
+            return false;
+         }
+      let i = i + 1;
+      }
+      return true;
+   }
 
 }

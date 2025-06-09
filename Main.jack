@@ -26,7 +26,14 @@ class Main{
       var int seed;
       var LFSR startingState;
       var LFSR rand;
+      var LFSR binA;
+      var LFSR binB;
       //let seed = 420;
+      let binA = LFSR.decToBin(0, 16);
+      let binB = LFSR.decToBin(0, 16);
+      do Output.moveCursor(6, 10);
+      do Output.printString("binA == binB is ");
+      do Output.printInt(LFSR.binEquals(binA, binB));
       let startingState = LFSR.stringToBin("1010100110010010");
       let rand = LFSR.nextGalois(startingState);
       do Output.moveCursor(8, 10);
