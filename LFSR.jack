@@ -5,9 +5,15 @@ class LFSR{
 
 
    constructor LFSR new(int bits){
+      var int i;
       let currentBit = 0;
       let nOfBits = bits;
       let array = Array.new(nOfBits);
+      let i = 0;
+      while (i < nOfBits) {
+         do set(0, i);
+         let i = i + 1;
+      }
       return this; 
    }
 
@@ -88,7 +94,7 @@ class LFSR{
       return output;
    }
 
-   function LFSR decToBin(int dec, int bits){
+   function LFSR decToBin2(int dec, int bits){
       var int msbVal;
       var LFSR bin;
       var int i;
@@ -114,6 +120,24 @@ class LFSR{
       }
       return bin;
     }
+
+
+   function LFSR decToBin(int dec, int bits){
+      var LFSR output;
+      var int temp;
+      var int rem;
+      var int i;
+      let output = LFSR.new(bits);
+      let i = bits - 1;
+      while (dec > 0) {
+         let temp = dec;
+         let dec = dec / 2;
+         let rem = temp - (dec * 2);
+         do output.set(rem, i);
+         let i = i - 1;
+      }
+      return output;
+   }
 
    function int pow(int n, int exp){
       if (exp = 0){
