@@ -2,6 +2,7 @@ class Main{
    function void main(){
       var LFSR bin;
       var LFSR bin2;
+      var LFSR resBin;
       let bin = LFSR.decToBin(13, 15);
       //let bin = LFSR.new(8);
       
@@ -12,10 +13,15 @@ class Main{
       do Output.moveCursor(10, 30);
       do bin.print();
       do Output.moveCursor(12,30);
-      let bin2 = LFSR.leftShift(bin, 7);
+      let bin2 = LFSR.decToBin(412, 15);
+      let resBin = LFSR.XOR(bin, bin2);
       do bin2.print();
+      do Output.moveCursor(14,30);
+      do resBin.print();
+      
       do bin.dispose();
       do bin2.dispose();
+      do resBin.dispose();
       return;      
    }
 }

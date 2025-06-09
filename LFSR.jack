@@ -69,6 +69,25 @@ class LFSR{
      return output;     
    }
 
+   function LFSR XOR(LFSR a, LFSR b){
+      var int bits;
+      var LFSR output;
+      var int i;
+      let bits = a.getNOfBits();
+      let output = LFSR.new(bits);
+      let i = 0;
+      while (i < bits){
+         if (a.get(i) = b.get(i)){
+            do output.build(0);
+         }
+         else {
+            do output.build(1);
+         }
+      let i = i + 1;
+      }
+      return output;
+   }
+
    function LFSR decToBin(int dec, int bits){
       var int msbVal;
       var LFSR bin;
