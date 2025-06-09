@@ -28,6 +28,9 @@ class LFSR{
    }
 
    method void set(int val, int index){
+      if (~ ((val = 0) | (val = 1))){
+         do Sys.error(69);
+      }
       let array[index] = val;
       return;
     }
@@ -51,6 +54,10 @@ class LFSR{
       }
       return;
    }
+  
+   method int getMSB() {
+      return get(0);
+   }
    
    method int getNOfBits(){
       return nOfBits;
@@ -67,12 +74,7 @@ class LFSR{
          do output.build(input.get(shift + i));
          let i = i + 1;
       }
-     let i = 0;
-     while (i < shift){
-        do output.build(0);
-        let i = i + 1;
-     }
-     return output;     
+      return output;     
    }
 
    function LFSR XOR(LFSR a, LFSR b){
@@ -89,12 +91,12 @@ class LFSR{
          else {
             do output.build(1);
          }
-      let i = i + 1;
+         let i = i + 1;
       }
       return output;
    }
 
-   function LFSR decToBin2(int dec, int bits){
+   function LFSR decToBinRedundant(int dec, int bits){
       var int msbVal;
       var LFSR bin;
       var int i;
@@ -138,6 +140,28 @@ class LFSR{
       }
       return output;
    }
+   
+   function LFSR stringToBin(String binS) {
+      var int bits;
+      var LFSR output;
+      var int i;
+      var int char;
+      let bits = binS.length();
+      let output = LFSR.new(bits);
+      let i = 0;
+      while ( i < bits) {
+         let char = binS.charAt(i);
+         if (char = 48) {
+            do output.build(0);
+         }
+         else {
+            do output.build(1);
+         }
+         let i = i + 1;
+      }
+      return output;
+      
+   }
 
    function int pow(int n, int exp){
       if (exp = 0){
@@ -147,5 +171,26 @@ class LFSR{
          return n * LFSR.pow(n, exp - 1);
       }
    }
+
+   function LFSR nextGalois(LFSR prevState){
+      var int msb;
+      var LFSR shifted;
+      var LFSR mask;
+      var LFSR res;
+      let msb = getMSB();
+      let shifted = LFSR.leftShift(prevState, 1);
+      let mask = LFSR.stringToBin("0000000000101101");
+      if (msb = 1) {
+         let res = LFSR.XOR(shifted, mask);
+         do shifted.dispose();
+         do mask.dispose();
+         return res;
+      }
+      else {
+         do mask.dispose();
+         do res.dispose();
+         return shifted;
+      }
+   } 
 
 }
