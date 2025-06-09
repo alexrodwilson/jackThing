@@ -45,6 +45,29 @@ class LFSR{
       }
       return;
    }
+   
+   method int getNOfBits(){
+      return nOfBits;
+   }
+
+   function LFSR leftShift(LFSR input, int shift){
+      var int bits;
+      var LFSR output;
+      var int i;
+      let bits = input.getNOfBits();
+      let output = LFSR.new(bits);
+      let i = 0;
+      while ((i + shift) < bits){
+         do output.build(input.get(shift + i));
+         let i = i + 1;
+      }
+     let i = 0;
+     while (i < shift){
+        do output.build(0);
+        let i = i + 1;
+     }
+     return output;     
+   }
 
    function LFSR decToBin(int dec, int bits){
       var int msbVal;
