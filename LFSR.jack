@@ -1,4 +1,4 @@
-class LFSR{
+class LFSR {
    field int currentBit;
    field Array array;
    field int nOfBits;
@@ -144,14 +144,17 @@ class LFSR{
       }
    }
 
-   function LFSR nextGalois(LFSR prevState){
+   function LFSR nextGalois2(LFSR prevState){
       var int msb;
       var LFSR shifted;
+      var String maskString;
       var LFSR mask;
       var LFSR res;
       let msb = getMSB();
       let shifted = LFSR.leftShift(prevState, 1);
-      let mask = LFSR.stringToBin("0000000000101101");
+      let maskString = "0000000000101101";
+      let mask = LFSR.stringToBin(maskString);
+      do maskString.dispose();
       if (msb = 1) {
          let res = LFSR.XOR(shifted, mask);
          do shifted.dispose();
@@ -164,7 +167,29 @@ class LFSR{
          return shifted;
       }
    } 
-   
+
+   function LFSR nextGalois(LFSR prevState){
+      var int msb;
+      var LFSR shifted;
+      var LFSR mask;
+      var LFSR res;
+      let msb = getMSB();
+      let shifted = LFSR.leftShift(prevState, 1);
+      let mask = LFSR.decToBin(45, 16);
+      if (msb = 1) {
+         let res = LFSR.XOR(shifted, mask);
+      }
+      else {
+         let res = shifted;
+      }
+      do shifted.dispose();
+      do mask.dispose();
+      return res;
+   } 
+
+
+
+
    function boolean binEquals(LFSR binA, LFSR binB){
       var int i;
       var int bits;
@@ -182,6 +207,7 @@ class LFSR{
   function int galois(int seed) {
      var LFSR startingState;
      var LFSR state;
+     var LFSR tempState;
      var int period;
      var boolean looping;
      let startingState = LFSR.decToBin(seed, 16);
@@ -189,15 +215,16 @@ class LFSR{
      let looping = true;
      let period = 0;
      while (looping){
-	let state = LFSR.nextGalois(state);
+        let tempState = state;
+	let state = LFSR.nextGalois(tempState);
+        do tempState.dispose();
         let period = period + 1;
-        if (LFSR.binEquals(state, startingState) | (period = 300)){
+        if (LFSR.binEquals(state, startingState) | (period = 10000)){
           let looping = false;
         }     
      }
      do state.dispose();  
      do startingState.dispose();
-     //do state.dispose();
      return period;
   }
 

@@ -40,7 +40,7 @@ class Main{
       do startingState.print();
       do Output.moveCursor(10, 10);
       do rand.print();
- */
+*/
       var int seed;
       let seed = 420;
       do Output.moveCursor(6, 10);
