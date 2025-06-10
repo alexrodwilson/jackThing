@@ -21,7 +21,7 @@ class Main{
       
       do bin.dispose();
       do bin2.dispose();
-      do resBin.dispose();*/
+      do resBin.dispose();
 
       var int seed;
       var LFSR startingState;
@@ -40,6 +40,11 @@ class Main{
       do startingState.print();
       do Output.moveCursor(10, 10);
       do rand.print();
+ */
+      var int seed;
+      let seed = 420;
+      do Output.moveCursor(6, 10);
+      do Output.printInt(LFSR.galois(seed));
       return;      
    }
 }
