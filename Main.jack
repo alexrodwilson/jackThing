@@ -49,14 +49,11 @@ class Main {
       var int seed;
       var int i;
       var Array rands;
-      let seed = 3100;
+      let seed = 420;
       let i = 0;
       let rands = LFSR.genArray(seed, 50 * 50);
-      do Output.moveCursor(6, 5);
-      while (i < 50) {
-         do Output.printInt(rands[i]);
-         let i = i + 1;
-      }
+      do LFSR.testArray(rands, 50*50);
+
       return;
      
 /*

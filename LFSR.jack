@@ -265,4 +265,33 @@ class LFSR {
      return array;
    }
 
+   function void testArray(Array a, int length) {
+      var int zeros, ones, i;
+      var String zeroString, oneString;
+      let zeroString = "Zeros: ";
+      let oneString = "Ones: ";
+      let zeros = 0;
+      let ones = 0;
+      let i = 0;
+      while (i < length) {
+         if (a[i] = 0){
+            let zeros = zeros + 1;
+  
+         }
+         else {
+            let ones = ones + 1;
+         }
+         let i = i + 1;
+      }
+      do Output.moveCursor(4, 10);
+      do Output.printString(zeroString);
+      do Output.printInt(zeros);
+      do Output.moveCursor(5, 10);
+      do Output.printString(oneString);
+      do Output.printInt(ones);
+      do zeroString.dispose();
+      do oneString.dispose();
+      return;
+   }
+
 }
