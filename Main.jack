@@ -1,4 +1,4 @@
-class Main{
+class Main {
    function void main(){
       /*var LFSR bin;
       var LFSR bin2;
@@ -40,11 +40,44 @@ class Main{
       do startingState.print();
       do Output.moveCursor(10, 10);
       do rand.print();
-*/
+
       var int seed;
       let seed = 420;
       do Output.moveCursor(6, 10);
       do Output.printInt(LFSR.galois(seed));
-      return;      
+*/ 
+      var int seed;
+      var int i;
+      var Array rands;
+      let seed = 3100;
+      let i = 0;
+      let rands = LFSR.genArray(seed, 50 * 50);
+      do Output.moveCursor(6, 5);
+      while (i < 50) {
+         do Output.printInt(rands[i]);
+         let i = i + 1;
+      }
+      return;
+     
+/*
+      var LFSR state;
+      var LFSR tempState;
+      var int seed;
+      var int i;
+      let seed = 420;
+      let state = LFSR.decToBin(seed, 16);
+      let i = 0;
+      do Output.moveCursor(0, 0);
+      while (i < 22) {
+        let tempState = state;
+	let state = LFSR.nextGalois(tempState);
+        do state.print();
+        do Output.println();
+        do tempState.dispose();
+        let i = i + 1;   
+      }
+      do state.dispose();
+      return;  
+*/   
    }
 }
