@@ -1,12 +1,10 @@
 class LFSR {
-   field int currentBit;
+
    field Array array;
    field int nOfBits;
 
-
-   constructor LFSR new(int bits){
+   constructor LFSR new(int bits) {
       var int i;
-      let currentBit = 0;
       let nOfBits = bits;
       let array = Array.new(nOfBits);
       let i = 0;
@@ -14,7 +12,7 @@ class LFSR {
          do set(0, i);
          let i = i + 1;
       }
-      return this; 
+      return this;  
    }
 
    method void dispose(){
@@ -22,7 +20,7 @@ class LFSR {
       do Memory.deAlloc(this);
       return;    
    }
-    
+
    method int get(int index){
       return array[index];
    }
@@ -35,26 +33,17 @@ class LFSR {
       return;
     }
 
-   method void build(int binDig){
-      if (~ ((binDig = 1)|(binDig = 0))){
-         do Sys.error(69);
-      }
-      let array[currentBit] = binDig;
-      let currentBit = currentBit + 1;
-      return;
-   }
-
-   method void print(){
+   method void print() {
       var int i;
       let i = 0;
-      
-      while (i < nOfBits){
+
+      while ( i < nOfBits) {
          do Output.printInt(get(i));
          let i = i + 1;
       }
       return;
    }
-  
+
    method int getMSB() {
       return get(0);
    }
@@ -62,44 +51,71 @@ class LFSR {
    method int getLSB() {
       return get(getNOfBits() - 1);
    }
-   
+
    method int getNOfBits(){
+      if (nOfBits = 0) {
+         do Sys.error(420);
+      }
       return nOfBits;
    }
 
-   function LFSR leftShift(LFSR input, int shift){
+   function LFSR leftShift(LFSR input, int shift) {
       var int bits;
       var LFSR output;
       var int i;
+      do LFSR.checkBin(input);
       let bits = input.getNOfBits();
       let output = LFSR.new(bits);
-      let i = 0;
-      while ((i + shift) < bits){
-         do output.build(input.get(shift + i));
+      let i = shift;
+      while (i < bits) {
+         do output.set(input.get(i), i - shift);
          let i = i + 1;
       }
-      return output;     
+      do LFSR.checkBin(output);
+      return output;  
    }
 
-   function LFSR XOR(LFSR a, LFSR b){
+   function void checkBin(LFSR bin) {
+      var int i;
+      var int bits;
+      let i = 0;
+      let bits = bin.getNOfBits();
+      if (bits = 0){
+          do Sys.error(420);
+       }
+      while (i < bits) {
+         if (~ ((bin.get(i) = 0) | (bin.get(i) = 1))) {
+            do Output.moveCursor(5,10);
+            do Output.printInt(bin.get(i));
+            do Output.println();
+            do Sys.error(69);
+         }
+         let i = i + 1;
+      }
+      return;
+   }
+
+   function LFSR XORShift(LFSR a, LFSR b){
       var int bits;
       var LFSR output;
       var int i;
+      do LFSR.checkBin(a);
+      do LFSR.checkBin(b);
       let bits = a.getNOfBits();
       let output = LFSR.new(bits);
       let i = 0;
       while (i < bits){
          if (a.get(i) = b.get(i)){
-            do output.build(0);
+            do output.set(0, i);
          }
          else {
-            do output.build(1);
+            do output.set(1, i);
          }
          let i = i + 1;
       }
+      do LFSR.checkBin(output);
       return output;
    }
-
    function LFSR decToBin(int dec, int bits){
       var LFSR output;
       var int temp;
@@ -115,81 +131,8 @@ class LFSR {
          let i = i - 1;
       }
       return output;
+      do LFSR.checkBin(output);
    }
-   
-   function LFSR stringToBin(String binS) {
-      var int bits;
-      var LFSR output;
-      var int i;
-      var int char;
-      let bits = binS.length();
-      let output = LFSR.new(bits);
-      let i = 0;
-      while ( i < bits) {
-         let char = binS.charAt(i);
-         if (char = 48) {
-            do output.build(0);
-         }
-         else {
-            do output.build(1);
-         }
-         let i = i + 1;
-      }
-      return output;
-      
-   }
-
-   function int pow(int n, int exp){
-      if (exp = 0){
-         return 1;
-      }
-      else{
-         return n * LFSR.pow(n, exp - 1);
-      }
-   }
-
-   function LFSR nextGaloisRedundant(LFSR prevState){
-      var int msb;
-      var LFSR shifted;
-      var String maskString;
-      var LFSR mask;
-      var LFSR res;
-      let msb = getMSB();
-      let shifted = LFSR.leftShift(prevState, 1);
-      let maskString = "0000000000101101";
-      let mask = LFSR.stringToBin(maskString);
-      do maskString.dispose();
-      if (msb = 1) {
-         let res = LFSR.XOR(shifted, mask);
-         do shifted.dispose();
-         do mask.dispose();
-         return res;
-      }
-      else {
-         do mask.dispose();
-         do res.dispose();
-         return shifted;
-      }
-   } 
-
-   function LFSR nextGalois(LFSR prevState){
-      var int msb;
-      var LFSR shifted;
-      var LFSR mask;
-      var LFSR res;
-      let msb = prevState.getMSB();
-      let shifted = LFSR.leftShift(prevState, 1);
-      let mask = LFSR.decToBin(45, 16);
-      if (msb = 1) {
-         let res = LFSR.XOR(shifted, mask);
-      }
-      else {
-         let res = shifted;
-      }
-      do shifted.dispose();
-      do mask.dispose();
-      return res;
-   } 
 
    function boolean binEquals(LFSR binA, LFSR binB){
       var int i;
@@ -205,93 +148,25 @@ class LFSR {
       return true;
    }
 
-  function int galois(int seed) {
-     var LFSR startingState;
-     var LFSR state;
-     var LFSR tempState;
-     var int period;
-     var boolean looping;
-     let startingState = LFSR.decToBin(seed, 16);
-     let state = LFSR.decToBin(seed, 16);
-     let looping = true;
-     let period = 0;
-     while (looping){
-        let tempState = state;
-	let state = LFSR.nextGalois(tempState);
-        do tempState.dispose();
-        let period = period + 1;
-        if (LFSR.binEquals(state, startingState) | (period = 10000)){
-          let looping = false;
-        }     
-     }
-     do state.dispose();  
-     do startingState.dispose();
-     return period;
-  }
-
-   function Array genArray(int seed, int size) {
-     var LFSR startingState;
-     var LFSR state;
-     var LFSR tempState;
-     var Array array;
-     var int period;
-     var int tick;
-     var boolean looping;
-     let startingState = LFSR.decToBin(seed, 16);
-     let state = LFSR.decToBin(seed, 16);
-     let array = Array.new(size);
-     let looping = true;
-     let period = 0;
-     let tick = 1;
-     while (looping){
-        let tempState = state;
-	let state = LFSR.nextGalois(tempState);
-        do tempState.dispose();
-        let array[period] = state.getLSB();
-        let period = period + 1;
-        if (LFSR.binEquals(state, startingState)){
-          let state = LFSR.decToBin(tick, 16);
-        }
-        if (period = size) {
-           let looping = false;
-        }
-        if (tick = 32767) {
-           let tick = 0;
-        }  
-        let tick = tick + 1;   
-     }
-     do state.dispose();  
-     do startingState.dispose();
-     return array;
-   }
-
-   function void testArray(Array a, int length) {
-      var int zeros, ones, i;
-      var String zeroString, oneString;
-      let zeroString = "Zeros: ";
-      let oneString = "Ones: ";
-      let zeros = 0;
-      let ones = 0;
-      let i = 0;
-      while (i < length) {
-         if (a[i] = 0){
-            let zeros = zeros + 1;
-  
-         }
-         else {
-            let ones = ones + 1;
-         }
-         let i = i + 1;
+   function LFSR nextGalois(LFSR prevState) {
+      var LFSR shifted;
+      var LFSR res;
+      var LFSR mask;
+      var int msb;
+      do LFSR.checkBin(prevState);
+      let msb = prevState.getMSB();
+      let shifted = LFSR.leftShift(prevState, 1);
+      let mask = LFSR.decToBin(45, 16);
+      if (msb = 1) {
+         let res = LFSR.XORShift(shifted, mask);
       }
-      do Output.moveCursor(4, 10);
-      do Output.printString(zeroString);
-      do Output.printInt(zeros);
-      do Output.moveCursor(5, 10);
-      do Output.printString(oneString);
-      do Output.printInt(ones);
-      do zeroString.dispose();
-      do oneString.dispose();
-      return;
+      else {
+         let res = shifted;
+      }
+      do shifted.dispose();
+      do mask.dispose();
+      do LFSR.checkBin(res);
+      return res;      
    }
 
 }

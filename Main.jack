@@ -1,80 +1,20 @@
 class Main {
    function void main(){
-      /*var LFSR bin;
-      var LFSR bin2;
-      var LFSR resBin;
-      let bin = LFSR.decToBin(13, 16);
-      //let bin = LFSR.new(8);
-      
-      //do bin.build(0);
-      //do bin.build(1);
-      //do bin.build(0);
-      //do bin.build(1);
-      do Output.moveCursor(10, 30);
-      do bin.print();
-      do Output.moveCursor(12,30);
-      let bin2 = LFSR.decToBin(412, 16);
-      let resBin = LFSR.XOR(bin, bin2);
-      do bin2.print();
-      do Output.moveCursor(14,30);
-      do resBin.print();
-      
-      do bin.dispose();
-      do bin2.dispose();
-      do resBin.dispose();
-
-      var int seed;
-      var LFSR startingState;
-      var LFSR rand;
-      var LFSR binA;
-      var LFSR binB;
-      //let seed = 420;
-      let binA = LFSR.decToBin(0, 16);
-      let binB = LFSR.decToBin(0, 16);
-      do Output.moveCursor(6, 10);
-      do Output.printString("binA == binB is ");
-      do Output.printInt(LFSR.binEquals(binA, binB));
-      let startingState = LFSR.stringToBin("1010100110010010");
-      let rand = LFSR.nextGalois(startingState);
-      do Output.moveCursor(8, 10);
-      do startingState.print();
-      do Output.moveCursor(10, 10);
-      do rand.print();
-
-      var int seed;
-      let seed = 420;
-      do Output.moveCursor(6, 10);
-      do Output.printInt(LFSR.galois(seed));
-*/ 
-      var int seed;
-      var int i;
-      var Array rands;
-      let seed = 420;
+      var int nOfTrials, i;
+      var LFSR state, tempState;
+      let nOfTrials = 10000;
       let i = 0;
-      let rands = LFSR.genArray(seed, 50 * 50);
-      do LFSR.testArray(rands, 50*50);
-
-      return;
-     
-/*
-      var LFSR state;
-      var LFSR tempState;
-      var int seed;
-      var int i;
-      let seed = 420;
-      let state = LFSR.decToBin(seed, 16);
-      let i = 0;
-      do Output.moveCursor(0, 0);
-      while (i < 22) {
-        let tempState = state;
-	let state = LFSR.nextGalois(tempState);
-        do state.print();
-        do Output.println();
-        do tempState.dispose();
-        let i = i + 1;   
+      let state = LFSR.decToBin(13, 16);
+      
+      while (i < nOfTrials) {
+         let tempState = state;
+         let state = LFSR.nextGalois(state);
+         do tempState.dispose();
+         let i = i + 1;
       }
       do state.dispose();
-      return;  
-*/   
+      do Output.moveCursor(5, 20);
+      do Output.printInt(nOfTrials);
+      return;
    }
 }
