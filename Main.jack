@@ -1,6 +1,6 @@
 class Main {
    function void main(){
-      var int nOfTrials, i;
+/*    var int nOfTrials, i;
       var LFSR state, tempState;
       let nOfTrials = 10000;
       let i = 0;
@@ -15,6 +15,29 @@ class Main {
       do state.dispose();
       do Output.moveCursor(5, 20);
       do Output.printInt(nOfTrials);
+*/    
+      var int DELAY, key, t;
+      var LFSR state, tempState;
+      let DELAY = 10;
+      let state = LFSR.decToBin(13, 16);
+      
+      let t = 0;
+      while (true) {
+         let key = Keyboard.keyPressed();  
+         if ((key = 32) & (t = 0)) {
+            let t = DELAY;
+            do Screen.clearScreen();
+            let tempState = state;
+            let state = LFSR.nextGalois(state);
+            do Output.moveCursor(10, 30);
+            do state.print();
+            do tempState.dispose();
+         } 
+         if (t > 0 ) {
+            let t = t - 1; 
+         }
+      }
+      do state.dispose();
       return;
    }
 }

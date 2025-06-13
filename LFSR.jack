@@ -53,9 +53,6 @@ class LFSR {
    }
 
    method int getNOfBits(){
-      if (nOfBits = 0) {
-         do Sys.error(420);
-      }
       return nOfBits;
    }
 
@@ -153,7 +150,7 @@ class LFSR {
       var LFSR res;
       var LFSR mask;
       var int msb;
-      do LFSR.checkBin(prevState);
+     // do LFSR.checkBin(prevState);
       let msb = prevState.getMSB();
       let shifted = LFSR.leftShift(prevState, 1);
       let mask = LFSR.decToBin(45, 16);
@@ -165,7 +162,7 @@ class LFSR {
       }
       do shifted.dispose();
       do mask.dispose();
-      do LFSR.checkBin(res);
+      //do LFSR.checkBin(res);
       return res;      
    }
 

@@ -1,0 +1,19 @@
+class Util {
+   function int mod(int n, int div) {
+      var int quot, rem;
+      if ((div < 0) | ( div > (n - 1))){
+         do Sys.error(6969);
+      }
+      if (div = 1) {
+         return 0;
+      }
+      else { 
+         let quot = n / div;
+         let rem = n - (div * quot);
+         return rem;
+      }
+
+   }
+      
+
+}
