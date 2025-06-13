@@ -1,0 +1,60 @@
+class Queue {
+   field Array array;
+   field int capacity;
+   field int holding;
+
+   constructor void new (int cap){
+      let capacity = cap;
+      let holding = 0;
+      let array = Array.new(capacity);
+      return this;
+   }
+   
+   method void dispose(){
+      do array.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   method void add(LFSR bin){
+      var int i;
+      var Array tempArray;
+      var LFSR temp;
+      let holding = Math.min(holding + 1, capacity);
+      if (holding = capacity) {
+         let temp = array[capacity - 1];
+         do temp.dispose();
+      }
+      
+/*
+      while (i < holding ) {
+         let array[i] = array[i - 1];
+         let i = i + 1;
+      }
+*/
+      let tempArray = Array.new(capacity);
+      let i = 1;
+      while (i < holding) {
+         let tempArray[i] = array[i - 1];
+         let i = i + 1;
+      }
+      let tempArray[0] = bin;
+      do array.dispose();
+      let array = tempArray;
+      return;
+   }
+   
+   method void display(int row, int char) {
+      var int i;
+      var LFSR temp;
+      let i = 0;
+      while ( i < holding) {
+         do Output.moveCursor(row + i, char);
+         let temp = array[i];
+         do temp.print();
+         let i = i + 1;
+      }
+      return;
+   }
+
+}

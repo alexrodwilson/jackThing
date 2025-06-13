@@ -2,9 +2,11 @@ class Main {
    function void main(){
 /*    var int nOfTrials, i;
       var LFSR state, tempState;
+      
       let nOfTrials = 10000;
       let i = 0;
       let state = LFSR.decToBin(13, 16);
+      
       
       while (i < nOfTrials) {
          let tempState = state;
@@ -18,7 +20,9 @@ class Main {
 */    
       var int DELAY, key, t;
       var LFSR state, tempState;
-      let DELAY = 10;
+      var Queue displayQ;
+      let DELAY = 30;
+      let displayQ = Queue.new(5);
       let state = LFSR.decToBin(13, 16);
       
       let t = 0;
@@ -26,18 +30,20 @@ class Main {
          let key = Keyboard.keyPressed();  
          if ((key = 32) & (t = 0)) {
             let t = DELAY;
-            do Screen.clearScreen();
             let tempState = state;
             let state = LFSR.nextGalois(state);
-            do Output.moveCursor(10, 30);
-            do state.print();
             do tempState.dispose();
-         } 
+            do displayQ.add(state);
+            do Screen.clearScreen();
+            do displayQ.display(8, 23);    
+         }
+
          if (t > 0 ) {
             let t = t - 1; 
          }
       }
       do state.dispose();
+      do displayQ.dispose();
       return;
    }
 }
