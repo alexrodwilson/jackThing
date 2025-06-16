@@ -145,25 +145,26 @@ class LFSR {
       return true;
    }
 
-   function LFSR nextGalois(LFSR prevState) {
+   function LFSR nextGalois(LFSR prevState, LFSR mask) {
       var LFSR shifted;
       var LFSR res;
-      var LFSR mask;
+      //var LFSR mask;
       var int msb;
-     // do LFSR.checkBin(prevState);
+      do LFSR.checkBin(prevState);
       let msb = prevState.getMSB();
       let shifted = LFSR.leftShift(prevState, 1);
-      let mask = LFSR.decToBin(45, 16);
+      //let mask = LFSR.decToBin(45, 16);
       if (msb = 1) {
          let res = LFSR.XORShift(shifted, mask);
+         do shifted.dispose();
+         //do mask.dispose();
+         return res;
       }
       else {
-         let res = shifted;
+         //do mask.dispose();
+         return shifted;
       }
-      do shifted.dispose();
-      do mask.dispose();
-      //do LFSR.checkBin(res);
-      return res;      
+           
    }
 
 }

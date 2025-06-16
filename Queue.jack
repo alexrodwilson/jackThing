@@ -11,6 +11,13 @@ class Queue {
    }
    
    method void dispose(){
+      var int i;
+      var LFSR temp;
+      let i = 0;
+      while ( i < capacity) {
+         let temp = array[i];
+         temp.dispose();
+      }
       do array.dispose();
       do Memory.deAlloc(this);
       return;
@@ -25,13 +32,6 @@ class Queue {
          let temp = array[capacity - 1];
          do temp.dispose();
       }
-      
-/*
-      while (i < holding ) {
-         let array[i] = array[i - 1];
-         let i = i + 1;
-      }
-*/
       let tempArray = Array.new(capacity);
       let i = 1;
       while (i < holding) {

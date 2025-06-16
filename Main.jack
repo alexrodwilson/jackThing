@@ -1,29 +1,19 @@
 class Main {
    function void main(){
-/*    var int nOfTrials, i;
-      var LFSR state, tempState;
-      
-      let nOfTrials = 10000;
-      let i = 0;
-      let state = LFSR.decToBin(13, 16);
-      
-      
-      while (i < nOfTrials) {
-         let tempState = state;
-         let state = LFSR.nextGalois(state);
-         do tempState.dispose();
-         let i = i + 1;
-      }
-      do state.dispose();
-      do Output.moveCursor(5, 20);
-      do Output.printInt(nOfTrials);
-*/    
+      do Main.drawQueue();
+      return;
+   }
+   
+
+   function void drawQueue(){
       var int DELAY, key, t;
-      var LFSR state, tempState;
+      var LFSR state, tempState, mask;
       var Queue displayQ;
+
       let DELAY = 30;
       let displayQ = Queue.new(5);
-      let state = LFSR.decToBin(13, 16);
+      let state = LFSR.decToBin(5687, 16);
+      let mask = LFSR.decToBin(45, 16);
       
       let t = 0;
       while (true) {
@@ -31,7 +21,7 @@ class Main {
          if ((key = 32) & (t = 0)) {
             let t = DELAY;
             let tempState = state;
-            let state = LFSR.nextGalois(state);
+            let state = LFSR.nextGalois(state, mask);
             do tempState.dispose();
             do displayQ.add(state);
             do Screen.clearScreen();
@@ -42,8 +32,60 @@ class Main {
             let t = t - 1; 
          }
       }
+      do mask.dispose();
       do state.dispose();
       do displayQ.dispose();
       return;
+
    }
+
+   function void doNTrials(int n) {
+      var int nOfTrials, i;
+      var LFSR state, tempState, mask;
+      
+      let nOfTrials = n;
+      let i = 0;
+      let state = LFSR.decToBin(5687, 16);
+      let mask = LFSR.decToBin(45, 16);
+      
+      
+      while (i < nOfTrials) {
+         let tempState = state;
+         let state = LFSR.nextGalois(state, mask);
+         do tempState.dispose();
+         let i = i + 1;
+      }
+      do state.dispose();
+      do mask.dispose();
+      do Output.moveCursor(5, 20);
+      do Output.printInt(nOfTrials);
+      return;
+   }
+   function void doNTrialsWithQ(int n) {
+      var int nOfTrials, i;
+      var LFSR state, tempState;
+      var Queue displayQ;
+      var LFSR mask;
+      
+      let mask = LFSR.decToBin(45, 16);
+      let nOfTrials = n;
+      let i = 0;
+      let state = LFSR.decToBin(5687, 16);
+      let displayQ = Queue.new(5);
+           
+      while (i < nOfTrials) {
+         let tempState = state;
+         do displayQ.add(state);
+         let state = LFSR.nextGalois(state, mask);
+         do tempState.dispose();
+         let i = i + 1;
+      }
+      do state.dispose();
+      do displayQ.dispose();
+      do mask.dispose();
+      do Output.moveCursor(5, 20);
+      do Output.printInt(nOfTrials);
+      return;
+   }
+
 }
