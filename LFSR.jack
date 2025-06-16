@@ -68,7 +68,7 @@ class LFSR {
          do output.set(input.get(i), i - shift);
          let i = i + 1;
       }
-      do LFSR.checkBin(output);
+     // do LFSR.checkBin(output);
       return output;  
    }
 
@@ -110,7 +110,7 @@ class LFSR {
          }
          let i = i + 1;
       }
-      do LFSR.checkBin(output);
+     // do LFSR.checkBin(output);
       return output;
    }
    function LFSR decToBin(int dec, int bits){
@@ -128,7 +128,7 @@ class LFSR {
          let i = i - 1;
       }
       return output;
-      do LFSR.checkBin(output);
+    //  do LFSR.checkBin(output);
    }
 
    function boolean binEquals(LFSR binA, LFSR binB){

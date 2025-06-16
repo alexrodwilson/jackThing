@@ -1,0 +1,40 @@
+function Util.mod 2
+    push argument 1
+    push constant 0
+    lt
+    push argument 1
+    push argument 0
+    push constant 1
+    sub
+    gt
+    or
+    not
+    if-goto Util_1
+    push constant 6969
+    call Sys.error 1
+    pop temp 0
+    goto Util_0
+label Util_1
+label Util_0
+    push argument 1
+    push constant 1
+    eq
+    not
+    if-goto Util_3
+    push constant 0
+    return
+    goto Util_2
+label Util_3
+    push argument 0
+    push argument 1
+    call Math.divide 2
+    pop local 0
+    push argument 0
+    push argument 1
+    push local 0
+    call Math.multiply 2
+    sub
+    pop local 1
+    push local 1
+    return
+label Util_2

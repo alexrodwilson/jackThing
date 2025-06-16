@@ -1,6 +1,6 @@
 class Main {
    function void main(){
-      do Main.drawQueue();
+      do Main.genCaveArray(13, 2500);
       return;
    }
    
@@ -86,6 +86,51 @@ class Main {
       do Output.moveCursor(5, 20);
       do Output.printInt(nOfTrials);
       return;
+   }
+
+   function Array genCaveArray(int seed, int n) {
+      var int i, zeros, ones, bit;
+      var LFSR startingState, state, tempState, mask, zero;
+      var Array res;
+      
+      let i = 0;
+      let zeros = 0;
+      let ones = 0;
+      let res = Array.new(n);
+      let startingState = LFSR.decToBin(seed, 16);
+      let state = startingState;
+      let mask = LFSR.decToBin(45, 16);
+      let zero = LFSR.decToBin(0, 16);
+      
+      while (i < n) {
+         let tempState = state;
+         let state = LFSR.nextGalois(state, mask);
+         if ((LFSR.binEquals(state, startingState)) |
+             (LFSR.binEquals(state, zero))) {
+            let state = LFSR.decToBin(i, 16);         
+         }
+         let bit = state.getMSB();
+         if (bit = 0) {
+            let zeros = zeros + 1;
+         }
+         else {
+            let ones = ones + 1;
+         }
+         let res[i] = bit;
+         do tempState.dispose();
+         let i = i + 1;
+      }
+      do state.dispose();
+      do mask.dispose();
+      do Output.moveCursor(5, 20);
+      do Output.printString("Zeros: ");
+      do Output.printInt(zeros);
+      do Output.moveCursor(6, 20);
+      do Output.printString("Ones: ");
+      do Output.printInt(ones);
+      
+      //do Output.printInt(n);
+      return res;  
    }
 
 }

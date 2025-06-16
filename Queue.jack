@@ -16,7 +16,7 @@ class Queue {
       let i = 0;
       while ( i < capacity) {
          let temp = array[i];
-         temp.dispose();
+         do temp.dispose();
       }
       do array.dispose();
       do Memory.deAlloc(this);
