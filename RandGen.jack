@@ -1,0 +1,86 @@
+class RandGen {
+   field LFSR startingState;
+   field LFSR currentState;
+   field int tick;
+   field LFSR ZERO;
+   field LFSR MASK;
+   
+   constructor RandGen new(int seed) {
+      let startingState = LFSR.decToBin(seed, 16);
+      let currentState = startingState;
+      let ZERO = LFSR.decToBin(0, 16);
+      let MASK = LFSR.decToBin(45, 16);
+      let tick = seed;
+      return this; 
+   }
+
+   method void dispose() {
+      do startingState.dispose();
+      do currentState.dispose();
+      do ZERO.dispose();
+      do MASK.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+   method int genBit() {
+      var LFSR tempState;
+      let tempState = currentState;
+      let currentState = LFSR.nextGalois(currentState, MASK);
+      do tempState.dispose();
+      if (~ (stateOK(currentState))) {
+         do currentState.dispose();
+         let currentState = LFSR.decToBin(tick, 16);
+      }
+      do increaseTick();
+      return currentState.getMSB();
+   }
+  
+   method int genIntInRange(int range) {
+      var int bitsToGen, i, try;
+      var LFSR bin;
+      var boolean loop;
+      let bitsToGen = RandGen.calcBitsToGen(range);  
+      let bin = LFSR.new(bitsToGen);
+      let loop = true;
+      while (loop) {
+         let i = 0;
+         while (i < (range - 1) ) {
+            do bin.set(genBit(), i);
+            let i = i + 1;
+         }
+         let try = LFSR.binToDec(bin);
+         if (try < range) {
+            let loop = false;
+         }
+      }
+      do bin.dispose();
+      return try;
+   }
+
+   function int calcBitsToGen(int n) {
+      var int i;
+      let i = 0;
+      while  (Util.pow(2, i) < n){
+         let i = i + 1;
+      }
+      return i;
+   }
+
+   method boolean stateOK(LFSR state) {
+      return ~ ((LFSR.binEquals(state, startingState)) |
+                (LFSR.binEquals(state, ZERO)));
+   }
+
+   method void increaseTick(){
+      let tick = tick + 1;
+      if ( tick > 32766) {
+         let tick = 1;
+      }
+      return;     
+   }
+   
+   
+
+
+}

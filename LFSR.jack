@@ -96,8 +96,8 @@ class LFSR {
       var int bits;
       var LFSR output;
       var int i;
-      do LFSR.checkBin(a);
-      do LFSR.checkBin(b);
+      //do LFSR.checkBin(a);
+      //do LFSR.checkBin(b);
       let bits = a.getNOfBits();
       let output = LFSR.new(bits);
       let i = 0;
@@ -129,6 +129,22 @@ class LFSR {
       }
       return output;
     //  do LFSR.checkBin(output);
+   }
+
+   function int binToDec(LFSR bin){
+      var int i, total, bits, exp;
+      let total = 0;
+      let bits = bin.getNOfBits();
+      let exp = bits - 1;
+      let i = 0;
+      while (i < bits) {
+         if (bin.get(i) = 1) {
+            let total = total + Util.pow(2,exp);
+         }
+         let exp = exp - 1;
+         let i = i + 1;
+      }
+      return total;
    }
 
    function boolean binEquals(LFSR binA, LFSR binB){
