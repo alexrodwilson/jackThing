@@ -2,8 +2,8 @@ class RandGen {
    field LFSR startingState;
    field LFSR currentState;
    field int tick;
-   field LFSR ZERO;
-   field LFSR MASK;
+   static LFSR ZERO;
+   static LFSR MASK;
    
    constructor RandGen new(int seed) {
       let startingState = LFSR.decToBin(seed, 16);
@@ -36,6 +36,7 @@ class RandGen {
       return currentState.getMSB();
    }
   
+
    method int genIntInRange(int range) {
       var int bitsToGen, i, try;
       var LFSR bin;
@@ -51,11 +52,46 @@ class RandGen {
          }
          let try = LFSR.binToDec(bin);
          if (try < range) {
-            let loop = false;
+            let loop = false;     
          }
       }
       do bin.dispose();
       return try;
+   }
+
+   function void testGenIntInRange(int seed, int range, int trials) {
+      var RandGen randGen;
+      var int i, val;
+      var Array freqs;
+      var String spaceString;
+      let randGen = RandGen.new(seed);
+      let freqs = Array.new(range);
+      let i = 0;
+      while (i < range) {
+         let freqs[i] = 0;
+         let i = i + 1;
+      }
+      let i = 0;
+      while (i < trials) {
+         let val = randGen.genIntInRange(range);
+         let freqs[range] = freqs[range] + 1;
+         let i = i + 1;
+      }
+      let i = 0;
+      let spaceString = "        ";
+      do randGen.dispose();
+      while (i < range) {
+         do Output.printString(spaceString);
+         do Output.printInt(i);
+         do Output.printString(spaceString);
+         do Output.printInt(freqs[i]);
+         do Output.println();
+         let i = i + 1;
+      }
+      
+      do freqs.dispose();
+      do spaceString.dispose();
+      return;
    }
 
    function int calcBitsToGen(int n) {

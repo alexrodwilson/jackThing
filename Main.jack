@@ -1,31 +1,18 @@
 class Main {
    function void main(){
-      var int i, val;
-      var RandGen randG;
-      let randG = RandGen.new(13);
+      //do RandGen.testGenIntInRange(13, 10, 100);
+      var int i, n, val;
+     // var Array results;
+      var RandGen randGen;
+      let n = 1000;
+      //let results = Array.new(n);
+      let randGen = RandGen.new(13);
       let i = 0;
-      while (i < 20) {
-         let val =  randG.genIntInRange(6);
+      while (i < n) {
+         let val = 1 + randGen.genIntInRange(6);
          let i = i + 1;
-         do Output.printInt(val + 1);
-         do Output.println();
       }
-
-      /*var int seed;
-      var RandGen randG;
-      var LFSR zero, okS, starting;
-      let seed = 253;
-      let zero = LFSR.decToBin(0, 16);
-      let okS = LFSR.decToBin(3450, 16);
-      let starting = LFSR.decToBin(seed, 16);
-      let randG = RandGen.new(seed);
-      do Output.printInt(randG.stateOK(zero));
-      do Output.println();
-      do Output.printInt(randG.stateOK(okS));
-      do Output.println();
-      do Output.printInt(randG.stateOK(starting));
-      do Output.println();
-      do Output.printInt(true);*/
+      do Output.printInt(n);
       return;
    }
    
