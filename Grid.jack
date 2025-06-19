@@ -1,5 +1,55 @@
 class Grid {
+  field Array drawing;
+  field Array scratch;
+  field int height;
+  field int width;
+  field int size;
+  field int leftPadding;
+  field int topPadding;
+  field int scale;
 
+  constructor Grid new(int w, int h, int sc) {
+    let height = h;
+    let width = w;
+    let size = width * height;
+    let scale = sc;
+    let leftPadding = 50;
+    let topPadding = 50;
+   // let scratch = Array.new(size);
+    return this;
+  }
+
+  method void dispose(){
+    //do drawing.dispose();
+   // do scratch.dispose();
+    do Memory.deAlloc(this);
+    return;
+  }
+  
+  method int getCell(Array array, int x, int y) {
+    return array[x + (y * width)];   
+  }
+
+  method void draw(Array array){
+    var int x, y, posX, posY;
+    var boolean alive;
+    let x = 0;
+    let y = 0;
+    do Screen.clearScreen();
+    while (y < height) {
+      while (x < width) {
+        let posX = leftPadding + (x * scale);
+        let posY = topPadding + (y * scale);
+        let alive = getCell(array, x, y);
+        do Screen.setColor(alive);
+        do Screen.drawRectangle(posX, posY, posX + scale, posY + scale);
+        let x = x + 1;
+      }
+      let x = 0;
+      let y = y + 1;
+    }
+    return;
+  }
 
 
 }

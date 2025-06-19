@@ -1,128 +1,675 @@
-function Main.main 0
-    push constant 10
-    push constant 10
-    call Output.moveCursor 2
-    pop temp 0
-    push constant 13
-    call String.new 1
-    push constant 100
-    call String.appendChar 2
-    push constant 111
-    call String.appendChar 2
-    push constant 103
-    call String.appendChar 2
-    push constant 115
-    call String.appendChar 2
-    push constant 32
-    call String.appendChar 2
-    push constant 108
-    call String.appendChar 2
-    push constant 97
-    call String.appendChar 2
-    push constant 32
-    call String.appendChar 2
-    push constant 108
-    call String.appendChar 2
-    push constant 97
-    call String.appendChar 2
-    push constant 32
-    call String.appendChar 2
-    push constant 108
-    call String.appendChar 2
-    push constant 97
-    call String.appendChar 2
-    push constant 17
-    call String.new 1
-    push constant 32
-    call String.appendChar 2
-    push constant 102
-    call String.appendChar 2
-    push constant 114
-    call String.appendChar 2
-    push constant 117
-    call String.appendChar 2
-    push constant 105
-    call String.appendChar 2
-    push constant 116
-    call String.appendChar 2
-    push constant 99
-    call String.appendChar 2
-    push constant 97
-    call String.appendChar 2
-    push constant 107
-    call String.appendChar 2
-    push constant 101
-    call String.appendChar 2
-    push constant 32
-    call String.appendChar 2
-    push constant 109
-    call String.appendChar 2
-    push constant 111
-    call String.appendChar 2
-    push constant 114
-    call String.appendChar 2
-    push constant 109
-    call String.appendChar 2
-    push constant 111
-    call String.appendChar 2
-    push constant 110
-    call String.appendChar 2
-    call Main.stringAppend 2
-    call Output.printString 1
-    pop temp 0
-    push constant 0
-    return
-function Main.stringAppend 4
-    push argument 0
-    call String.length 1
-    pop local 2
-    push argument 1
-    call String.length 1
-    pop local 3
-    push local 2
-    push local 3
-    add
-    call String.new 1
+function Main.main 6
+    push constant 6
+    pop static 3
+    push constant 50
+    pop static 0
+    push constant 30
+    pop static 1
+    push static 0
+    push static 1
+    call Math.multiply 2
+    pop static 2
+    push constant 6999
+    pop local 4
+    push static 2
+    call Array.new 1
     pop local 0
-    push constant 0
+    push static 2
+    call Array.new 1
     pop local 1
+    push local 4
+    call RandGen.new 1
+    pop local 2
+    push constant 0
+    pop local 5
 label Main_0
-    push local 1
-    push local 2
+    push local 5
+    push static 2
     lt
     not
     if-goto Main_1
+    push local 5
     push local 0
-    push argument 0
-    push local 1
-    call String.charAt 2
-    call String.appendChar 2
-    pop local 0
-    push local 1
+    add
+    push local 2
+    call RandGen.genBit 1
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 5
     push constant 1
     add
-    pop local 1
+    pop local 5
     goto Main_0
 label Main_1
+    push local 2
+    call RandGen.dispose 1
+    pop temp 0
+    push local 0
+    call Main.setLiveBorder 1
+    pop temp 0
+    push local 0
+    call Main.drawArray 1
+    pop temp 0
+    push constant 0
+    return
+function Main.setLiveBorder 2
     push constant 0
     pop local 1
 label Main_2
     push local 1
-    push local 3
+    push static 1
     lt
     not
     if-goto Main_3
-    push local 0
-    push argument 1
+    push argument 0
+    push constant 0
     push local 1
-    call String.charAt 2
-    call String.appendChar 2
-    pop local 0
+    push constant 1
+    call Main.setCell 4
+    pop temp 0
     push local 1
     push constant 1
     add
     pop local 1
     goto Main_2
 label Main_3
+    push constant 0
+    pop local 0
+label Main_4
     push local 0
+    push static 0
+    lt
+    not
+    if-goto Main_5
+    push argument 0
+    push local 0
+    push constant 0
+    push constant 1
+    call Main.setCell 4
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_4
+label Main_5
+    push constant 0
+    pop local 1
+label Main_6
+    push local 1
+    push static 1
+    lt
+    not
+    if-goto Main_7
+    push argument 0
+    push static 0
+    push constant 1
+    sub
+    push local 1
+    push constant 1
+    call Main.setCell 4
+    pop temp 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Main_6
+label Main_7
+    push constant 0
+    pop local 0
+label Main_8
+    push local 0
+    push static 0
+    lt
+    not
+    if-goto Main_9
+    push argument 0
+    push local 0
+    push static 1
+    push constant 1
+    sub
+    push constant 1
+    call Main.setCell 4
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_8
+label Main_9
+    push constant 0
+    return
+function Main.getCell 0
+    push argument 1
+    push argument 2
+    push static 0
+    call Math.multiply 2
+    add
+    push argument 0
+    add
+    pop pointer 1
+    push that 0
+    return
+function Main.setCell 0
+    push argument 1
+    push argument 2
+    push static 0
+    call Math.multiply 2
+    add
+    push argument 0
+    add
+    push argument 3
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push constant 0
+    return
+function Main.drawArray 5
+    call Screen.clearScreen 0
+    pop temp 0
+    push constant 0
+    pop local 0
+    push constant 0
+    pop local 1
+label Main_10
+    push local 1
+    push static 1
+    lt
+    not
+    if-goto Main_11
+label Main_12
+    push local 0
+    push static 0
+    lt
+    not
+    if-goto Main_13
+    push constant 50
+    push local 0
+    push static 3
+    call Math.multiply 2
+    add
+    pop local 2
+    push constant 50
+    push local 1
+    push static 3
+    call Math.multiply 2
+    add
+    pop local 3
+    push local 0
+    push local 1
+    push static 0
+    call Math.multiply 2
+    add
+    push argument 0
+    add
+    pop pointer 1
+    push that 0
+    pop local 4
+    push local 4
+    call Screen.setColor 1
+    pop temp 0
+    push local 2
+    push local 3
+    push local 2
+    push static 3
+    add
+    push local 3
+    push static 3
+    add
+    call Screen.drawRectangle 4
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_12
+label Main_13
+    push constant 0
+    pop local 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Main_10
+label Main_11
+    push constant 0
+    return
+function Main.drawQueue 7
+    push constant 30
+    pop local 0
+    push constant 5
+    call Queue.new 1
+    pop local 6
+    push constant 5687
+    push constant 16
+    call LFSR.decToBin 2
+    pop local 3
+    push constant 45
+    push constant 16
+    call LFSR.decToBin 2
+    pop local 5
+    push constant 0
+    pop local 2
+label Main_14
+    push constant 1
+    neg
+    not
+    if-goto Main_15
+    call Keyboard.keyPressed 0
+    pop local 1
+    push local 1
+    push constant 32
+    eq
+    push local 2
+    push constant 0
+    eq
+    and
+    not
+    if-goto Main_17
+    push local 0
+    pop local 2
+    push local 3
+    pop local 4
+    push local 3
+    push local 5
+    call LFSR.nextGalois 2
+    pop local 3
+    push local 4
+    call LFSR.dispose 1
+    pop temp 0
+    push local 6
+    push local 3
+    call Queue.add 2
+    pop temp 0
+    call Screen.clearScreen 0
+    pop temp 0
+    push local 6
+    push constant 8
+    push constant 23
+    call Queue.display 3
+    pop temp 0
+    goto Main_16
+label Main_17
+label Main_16
+    push local 2
+    push constant 0
+    gt
+    not
+    if-goto Main_19
+    push local 2
+    push constant 1
+    sub
+    pop local 2
+    goto Main_18
+label Main_19
+label Main_18
+    goto Main_14
+label Main_15
+    push local 5
+    call LFSR.dispose 1
+    pop temp 0
+    push local 3
+    call LFSR.dispose 1
+    pop temp 0
+    push local 6
+    call Queue.dispose 1
+    pop temp 0
+    push constant 0
+    return
+function Main.doNTrials 5
+    push argument 0
+    pop local 0
+    push constant 0
+    pop local 1
+    push constant 5687
+    push constant 16
+    call LFSR.decToBin 2
+    pop local 2
+    push constant 45
+    push constant 16
+    call LFSR.decToBin 2
+    pop local 4
+label Main_20
+    push local 1
+    push local 0
+    lt
+    not
+    if-goto Main_21
+    push local 2
+    pop local 3
+    push local 2
+    push local 4
+    call LFSR.nextGalois 2
+    pop local 2
+    push local 3
+    call LFSR.dispose 1
+    pop temp 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Main_20
+label Main_21
+    push local 2
+    call LFSR.dispose 1
+    pop temp 0
+    push local 4
+    call LFSR.dispose 1
+    pop temp 0
+    push constant 5
+    push constant 20
+    call Output.moveCursor 2
+    pop temp 0
+    push local 0
+    call Output.printInt 1
+    pop temp 0
+    push constant 0
+    return
+function Main.doNTrialsWithQ 6
+    push constant 45
+    push constant 16
+    call LFSR.decToBin 2
+    pop local 5
+    push argument 0
+    pop local 0
+    push constant 0
+    pop local 1
+    push constant 5687
+    push constant 16
+    call LFSR.decToBin 2
+    pop local 2
+    push constant 5
+    call Queue.new 1
+    pop local 4
+label Main_22
+    push local 1
+    push local 0
+    lt
+    not
+    if-goto Main_23
+    push local 2
+    pop local 3
+    push local 4
+    push local 2
+    call Queue.add 2
+    pop temp 0
+    push local 2
+    push local 5
+    call LFSR.nextGalois 2
+    pop local 2
+    push local 3
+    call LFSR.dispose 1
+    pop temp 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Main_22
+label Main_23
+    push local 2
+    call LFSR.dispose 1
+    pop temp 0
+    push local 4
+    call Queue.dispose 1
+    pop temp 0
+    push local 5
+    call LFSR.dispose 1
+    pop temp 0
+    push constant 5
+    push constant 20
+    call Output.moveCursor 2
+    pop temp 0
+    push local 0
+    call Output.printInt 1
+    pop temp 0
+    push constant 0
+    return
+function Main.genCaveArrayRedundant 10
+    push constant 0
+    pop local 0
+    push constant 0
+    pop local 1
+    push constant 0
+    pop local 2
+    push argument 1
+    call Array.new 1
+    pop local 9
+    push argument 0
+    push constant 16
+    call LFSR.decToBin 2
+    pop local 4
+    push local 4
+    pop local 5
+    push constant 45
+    push constant 16
+    call LFSR.decToBin 2
+    pop local 7
+    push constant 0
+    push constant 16
+    call LFSR.decToBin 2
+    pop local 8
+label Main_24
+    push local 0
+    push argument 1
+    lt
+    not
+    if-goto Main_25
+    push local 5
+    pop local 6
+    push local 5
+    push local 7
+    call LFSR.nextGalois 2
+    pop local 5
+    push local 5
+    push local 4
+    call LFSR.binEquals 2
+    push local 5
+    push local 8
+    call LFSR.binEquals 2
+    or
+    not
+    if-goto Main_27
+    push local 0
+    push constant 16
+    call LFSR.decToBin 2
+    pop local 5
+    goto Main_26
+label Main_27
+label Main_26
+    push local 5
+    call LFSR.getMSB 1
+    pop local 3
+    push local 3
+    push constant 0
+    eq
+    not
+    if-goto Main_29
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Main_28
+label Main_29
+    push local 2
+    push constant 1
+    add
+    pop local 2
+label Main_28
+    push local 0
+    push local 9
+    add
+    push local 3
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 6
+    call LFSR.dispose 1
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_24
+label Main_25
+    push local 5
+    call LFSR.dispose 1
+    pop temp 0
+    push local 7
+    call LFSR.dispose 1
+    pop temp 0
+    push constant 5
+    push constant 20
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 7
+    call String.new 1
+    push constant 90
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push local 1
+    call Output.printInt 1
+    pop temp 0
+    push constant 6
+    push constant 20
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 6
+    call String.new 1
+    push constant 79
+    call String.appendChar 2
+    push constant 110
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push local 2
+    call Output.printInt 1
+    pop temp 0
+    push local 9
+    return
+function Main.genCaveArray 6
+    push constant 0
+    pop local 0
+    push constant 0
+    pop local 1
+    push constant 0
+    pop local 2
+    push argument 1
+    call Array.new 1
+    pop local 4
+    push argument 0
+    call RandGen.new 1
+    pop local 5
+label Main_30
+    push local 0
+    push argument 1
+    lt
+    not
+    if-goto Main_31
+    push local 5
+    call RandGen.genBit 1
+    pop local 3
+    push local 3
+    push constant 0
+    eq
+    not
+    if-goto Main_33
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Main_32
+label Main_33
+    push local 2
+    push constant 1
+    add
+    pop local 2
+label Main_32
+    push local 0
+    push local 4
+    add
+    push local 3
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_30
+label Main_31
+    push constant 5
+    push constant 20
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 7
+    call String.new 1
+    push constant 90
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push local 1
+    call Output.printInt 1
+    pop temp 0
+    push constant 6
+    push constant 20
+    call Output.moveCursor 2
+    pop temp 0
+    push constant 6
+    call String.new 1
+    push constant 79
+    call String.appendChar 2
+    push constant 110
+    call String.appendChar 2
+    push constant 101
+    call String.appendChar 2
+    push constant 115
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push local 2
+    call Output.printInt 1
+    pop temp 0
+    push local 4
     return

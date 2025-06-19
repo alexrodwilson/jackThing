@@ -38,3 +38,26 @@ label Util_3
     push local 1
     return
 label Util_2
+function Util.pow 2
+    push constant 1
+    pop local 0
+    push constant 0
+    pop local 1
+label Util_4
+    push local 1
+    push argument 1
+    lt
+    not
+    if-goto Util_5
+    push local 0
+    push argument 0
+    call Math.multiply 2
+    pop local 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto Util_4
+label Util_5
+    push local 0
+    return

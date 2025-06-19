@@ -1,19 +1,83 @@
 class Main {
+   static int WIDTH, HEIGHT, SIZE, SCALE;
    function void main(){
-      //do RandGen.testGenIntInRange(13, 10, 100);
-      var int i, n, val;
-     // var Array results;
-      var RandGen randGen;
-      let n = 1000;
-      //let results = Array.new(n);
-      let randGen = RandGen.new(13);
-      let i = 0;
-      while (i < n) {
-         let val = 1 + randGen.genIntInRange(6);
-         let i = i + 1;
+     
+     var Array array, array2;
+     var RandGen randG;
+     var Grid grid;
+     var int seed, i;
+     let SCALE = 6;
+     let WIDTH = 50;
+     let HEIGHT = 30;
+     let SIZE = WIDTH * HEIGHT;
+     let seed = 6999;
+     let array = Array.new(SIZE);
+     let array2 = Array.new(SIZE);
+     let randG = RandGen.new(seed);
+     let i = 0;
+     while (i < SIZE) {
+      let array[i] = randG.genBit();
+      let i = i + 1;
+     }
+     do randG.dispose();
+     do Main.setLiveBorder(array);
+     do Main.drawArray(array);        
+     return;
+   }
+
+   function void setLiveBorder(Array array) {
+      var int x, y;
+      let y = 0;
+      while (y < HEIGHT) {
+         do Main.setCell(array, 0, y, 1);
+         let y = y + 1;   
       }
-      do Output.printInt(n);
+      let x = 0;
+      while (x < WIDTH) {
+         do Main.setCell(array, x, 0, 1);
+         let x = x + 1;
+      }
+      let y = 0;
+      while (y < HEIGHT) {
+         do Main.setCell(array, WIDTH - 1, y, 1);
+         let y = y + 1;   
+      } 
+      let x = 0;
+      while (x < WIDTH) {
+         do Main.setCell(array, x, HEIGHT - 1, 1);
+         let x = x + 1;
+      }         
       return;
+   }
+   
+   function int getCell(Array array, int x, int y) {
+      return array[x + (y * WIDTH)];
+   }
+
+   function void setCell(Array array, int x, int y, int val) {
+      let array[x + (y * WIDTH)] = val;
+      return;
+   }
+
+   function void drawArray(Array array) {
+    var int x, y, posX, posY;
+    var boolean alive;
+    do Screen.clearScreen();    
+    let x = 0;
+    let y = 0;
+    while (y < HEIGHT) {
+      while (x < WIDTH) {
+        let posX = 50 + (x * SCALE);
+        let posY = 50 + (y * SCALE);
+        let alive = array[x + (y * WIDTH)]; 
+        do Screen.setColor(alive);
+        do Screen.drawRectangle(posX, posY, posX + SCALE, posY + SCALE);
+        let x = x + 1;
+      }
+      let x = 0;
+      let y = y + 1;
+    }
+    return;
    }
    
 
