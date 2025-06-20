@@ -1,9 +1,13 @@
-function Main.main 6
-    push constant 6
+function Main.main 7
+    push constant 4
     pop static 3
+    push constant 20
+    pop static 4
+    push constant 20
+    pop static 5
     push constant 50
     pop static 0
-    push constant 30
+    push constant 50
     pop static 1
     push static 0
     push static 1
@@ -19,7 +23,7 @@ function Main.main 6
     pop local 1
     push local 4
     call RandGen.new 1
-    pop local 2
+    pop local 3
     push constant 0
     pop local 5
 label Main_0
@@ -31,7 +35,7 @@ label Main_0
     push local 5
     push local 0
     add
-    push local 2
+    push local 3
     call RandGen.genBit 1
     pop temp 0
     pop pointer 1
@@ -43,67 +47,102 @@ label Main_0
     pop local 5
     goto Main_0
 label Main_1
-    push local 2
+    push local 3
     call RandGen.dispose 1
     pop temp 0
     push local 0
     call Main.setLiveBorder 1
     pop temp 0
+    push local 1
+    call Main.setLiveBorder 1
+    pop temp 0
     push local 0
     call Main.drawArray 1
     pop temp 0
+    push constant 1
+    pop local 6
+label Main_2
+    push local 6
+    push constant 0
+    gt
+    not
+    if-goto Main_3
+    push local 0
+    push local 1
+    call Main.step 2
+    pop local 6
+    push local 0
+    pop local 2
+    push local 1
+    pop local 0
+    push local 2
+    pop local 1
+    call Screen.clearScreen 0
+    pop temp 0
+    push local 0
+    call Main.drawArray 1
+    pop temp 0
+    push constant 7
+    push constant 50
+    call Output.moveCursor 2
+    pop temp 0
+    push local 6
+    call Output.printInt 1
+    pop temp 0
+    goto Main_2
+label Main_3
     push constant 0
     return
 function Main.setLiveBorder 2
     push constant 0
     pop local 1
-label Main_2
+label Main_4
     push local 1
     push static 1
-    lt
-    not
-    if-goto Main_3
-    push argument 0
-    push constant 0
-    push local 1
-    push constant 1
-    call Main.setCell 4
-    pop temp 0
-    push local 1
-    push constant 1
-    add
-    pop local 1
-    goto Main_2
-label Main_3
-    push constant 0
-    pop local 0
-label Main_4
-    push local 0
-    push static 0
     lt
     not
     if-goto Main_5
     push argument 0
-    push local 0
     push constant 0
+    push local 1
     push constant 1
     call Main.setCell 4
     pop temp 0
-    push local 0
+    push local 1
     push constant 1
     add
-    pop local 0
+    pop local 1
     goto Main_4
 label Main_5
     push constant 0
-    pop local 1
+    pop local 0
 label Main_6
-    push local 1
-    push static 1
+    push local 0
+    push static 0
     lt
     not
     if-goto Main_7
     push argument 0
+    push local 0
+    push constant 0
+    push constant 1
+    call Main.setCell 4
+    pop temp 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_6
+label Main_7
+    push constant 0
+    pop local 1
+label Main_8
+    push local 1
+    push static 1
+    lt
+    not
+    if-goto Main_9
+    push argument 0
     push static 0
     push constant 1
     sub
@@ -115,16 +154,16 @@ label Main_6
     push constant 1
     add
     pop local 1
-    goto Main_6
-label Main_7
+    goto Main_8
+label Main_9
     push constant 0
     pop local 0
-label Main_8
+label Main_10
     push local 0
     push static 0
     lt
     not
-    if-goto Main_9
+    if-goto Main_11
     push argument 0
     push local 0
     push static 1
@@ -137,8 +176,8 @@ label Main_8
     push constant 1
     add
     pop local 0
-    goto Main_8
-label Main_9
+    goto Main_10
+label Main_11
     push constant 0
     return
 function Main.getCell 0
@@ -167,6 +206,165 @@ function Main.setCell 0
     pop that 0
     push constant 0
     return
+function Main.nOfLiveNeighbours 3
+    push constant 0
+    pop local 2
+    push constant 1
+    neg
+    pop local 0
+    push constant 1
+    neg
+    pop local 1
+label Main_12
+    push local 1
+    push constant 2
+    lt
+    not
+    if-goto Main_13
+label Main_14
+    push local 0
+    push constant 2
+    lt
+    not
+    if-goto Main_15
+    push local 2
+    push argument 0
+    push argument 1
+    push local 0
+    add
+    push argument 2
+    push local 1
+    add
+    call Main.getCell 3
+    add
+    pop local 2
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_14
+label Main_15
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    push constant 1
+    neg
+    pop local 0
+    goto Main_12
+label Main_13
+    push local 2
+    push argument 0
+    push argument 1
+    push argument 2
+    call Main.getCell 3
+    sub
+    pop local 2
+    push local 2
+    return
+function Main.step 4
+    push constant 1
+    pop local 0
+    push constant 1
+    pop local 1
+    push constant 0
+    pop local 3
+label Main_16
+    push local 1
+    push static 1
+    push constant 1
+    sub
+    lt
+    not
+    if-goto Main_17
+label Main_18
+    push local 0
+    push static 0
+    push constant 1
+    sub
+    lt
+    not
+    if-goto Main_19
+    push argument 0
+    push local 0
+    push local 1
+    call Main.nOfLiveNeighbours 3
+    pop local 2
+    push argument 0
+    push local 0
+    push local 1
+    call Main.getCell 3
+    push constant 0
+    eq
+    not
+    if-goto Main_21
+    push local 2
+    push constant 5
+    gt
+    not
+    if-goto Main_23
+    push argument 1
+    push local 0
+    push local 1
+    push constant 1
+    call Main.setCell 4
+    pop temp 0
+    push local 3
+    push constant 1
+    add
+    pop local 3
+    goto Main_22
+label Main_23
+    push argument 1
+    push local 0
+    push local 1
+    push constant 0
+    call Main.setCell 4
+    pop temp 0
+label Main_22
+    goto Main_20
+label Main_21
+    push local 2
+    push constant 3
+    lt
+    not
+    if-goto Main_25
+    push argument 1
+    push local 0
+    push local 1
+    push constant 0
+    call Main.setCell 4
+    pop temp 0
+    push local 3
+    push constant 1
+    add
+    pop local 3
+    goto Main_24
+label Main_25
+    push argument 1
+    push local 0
+    push local 1
+    push constant 1
+    call Main.setCell 4
+    pop temp 0
+label Main_24
+label Main_20
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto Main_18
+label Main_19
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    push constant 1
+    pop local 0
+    goto Main_16
+label Main_17
+    push local 3
+    return
 function Main.drawArray 5
     call Screen.clearScreen 0
     pop temp 0
@@ -174,25 +372,25 @@ function Main.drawArray 5
     pop local 0
     push constant 0
     pop local 1
-label Main_10
+label Main_26
     push local 1
     push static 1
     lt
     not
-    if-goto Main_11
-label Main_12
+    if-goto Main_27
+label Main_28
     push local 0
     push static 0
     lt
     not
-    if-goto Main_13
-    push constant 50
+    if-goto Main_29
+    push static 4
     push local 0
     push static 3
     call Math.multiply 2
     add
     pop local 2
-    push constant 50
+    push static 5
     push local 1
     push static 3
     call Math.multiply 2
@@ -225,16 +423,16 @@ label Main_12
     push constant 1
     add
     pop local 0
-    goto Main_12
-label Main_13
+    goto Main_28
+label Main_29
     push constant 0
     pop local 0
     push local 1
     push constant 1
     add
     pop local 1
-    goto Main_10
-label Main_11
+    goto Main_26
+label Main_27
     push constant 0
     return
 function Main.drawQueue 7
@@ -253,11 +451,11 @@ function Main.drawQueue 7
     pop local 5
     push constant 0
     pop local 2
-label Main_14
+label Main_30
     push constant 1
     neg
     not
-    if-goto Main_15
+    if-goto Main_31
     call Keyboard.keyPressed 0
     pop local 1
     push local 1
@@ -268,7 +466,7 @@ label Main_14
     eq
     and
     not
-    if-goto Main_17
+    if-goto Main_33
     push local 0
     pop local 2
     push local 3
@@ -291,23 +489,23 @@ label Main_14
     push constant 23
     call Queue.display 3
     pop temp 0
-    goto Main_16
-label Main_17
-label Main_16
+    goto Main_32
+label Main_33
+label Main_32
     push local 2
     push constant 0
     gt
     not
-    if-goto Main_19
+    if-goto Main_35
     push local 2
     push constant 1
     sub
     pop local 2
-    goto Main_18
-label Main_19
-label Main_18
-    goto Main_14
-label Main_15
+    goto Main_34
+label Main_35
+label Main_34
+    goto Main_30
+label Main_31
     push local 5
     call LFSR.dispose 1
     pop temp 0
@@ -332,12 +530,12 @@ function Main.doNTrials 5
     push constant 16
     call LFSR.decToBin 2
     pop local 4
-label Main_20
+label Main_36
     push local 1
     push local 0
     lt
     not
-    if-goto Main_21
+    if-goto Main_37
     push local 2
     pop local 3
     push local 2
@@ -351,8 +549,8 @@ label Main_20
     push constant 1
     add
     pop local 1
-    goto Main_20
-label Main_21
+    goto Main_36
+label Main_37
     push local 2
     call LFSR.dispose 1
     pop temp 0
@@ -384,12 +582,12 @@ function Main.doNTrialsWithQ 6
     push constant 5
     call Queue.new 1
     pop local 4
-label Main_22
+label Main_38
     push local 1
     push local 0
     lt
     not
-    if-goto Main_23
+    if-goto Main_39
     push local 2
     pop local 3
     push local 4
@@ -407,8 +605,8 @@ label Main_22
     push constant 1
     add
     pop local 1
-    goto Main_22
-label Main_23
+    goto Main_38
+label Main_39
     push local 2
     call LFSR.dispose 1
     pop temp 0
@@ -451,12 +649,12 @@ function Main.genCaveArrayRedundant 10
     push constant 16
     call LFSR.decToBin 2
     pop local 8
-label Main_24
+label Main_40
     push local 0
     push argument 1
     lt
     not
-    if-goto Main_25
+    if-goto Main_41
     push local 5
     pop local 6
     push local 5
@@ -471,14 +669,14 @@ label Main_24
     call LFSR.binEquals 2
     or
     not
-    if-goto Main_27
+    if-goto Main_43
     push local 0
     push constant 16
     call LFSR.decToBin 2
     pop local 5
-    goto Main_26
-label Main_27
-label Main_26
+    goto Main_42
+label Main_43
+label Main_42
     push local 5
     call LFSR.getMSB 1
     pop local 3
@@ -486,18 +684,18 @@ label Main_26
     push constant 0
     eq
     not
-    if-goto Main_29
+    if-goto Main_45
     push local 1
     push constant 1
     add
     pop local 1
-    goto Main_28
-label Main_29
+    goto Main_44
+label Main_45
     push local 2
     push constant 1
     add
     pop local 2
-label Main_28
+label Main_44
     push local 0
     push local 9
     add
@@ -513,8 +711,8 @@ label Main_28
     push constant 1
     add
     pop local 0
-    goto Main_24
-label Main_25
+    goto Main_40
+label Main_41
     push local 5
     call LFSR.dispose 1
     pop temp 0
@@ -584,12 +782,12 @@ function Main.genCaveArray 6
     push argument 0
     call RandGen.new 1
     pop local 5
-label Main_30
+label Main_46
     push local 0
     push argument 1
     lt
     not
-    if-goto Main_31
+    if-goto Main_47
     push local 5
     call RandGen.genBit 1
     pop local 3
@@ -597,18 +795,18 @@ label Main_30
     push constant 0
     eq
     not
-    if-goto Main_33
+    if-goto Main_49
     push local 1
     push constant 1
     add
     pop local 1
-    goto Main_32
-label Main_33
+    goto Main_48
+label Main_49
     push local 2
     push constant 1
     add
     pop local 2
-label Main_32
+label Main_48
     push local 0
     push local 4
     add
@@ -621,8 +819,8 @@ label Main_32
     push constant 1
     add
     pop local 0
-    goto Main_30
-label Main_31
+    goto Main_46
+label Main_47
     push constant 5
     push constant 20
     call Output.moveCursor 2
