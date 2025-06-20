@@ -1,45 +1,100 @@
 class Main {
    static int WIDTH, HEIGHT, SIZE, SCALE, LEFT_PADDING, TOP_PADDING;
+   static Array array, scratch, temp;
+   
    function void main(){
-     
-     var Array array, scratch, temp;
-     var RandGen randG;
-     var int seed, i, changes;
-     let SCALE = 4;
-     let LEFT_PADDING = 20;
-     let TOP_PADDING = 20;
-     let WIDTH = 50;
-     let HEIGHT = 50;
-     let SIZE = WIDTH * HEIGHT;
-     let seed = 6999;
-     let array = Array.new(SIZE);
-     let scratch = Array.new(SIZE);
-     let randG = RandGen.new(seed);
-     let i = 0;
-     while (i < SIZE) {
-      let array[i] = randG.genBit();
-      let i = i + 1;
-     }
-     do randG.dispose();
-     do Main.setLiveBorder(array);
-     do Main.setLiveBorder(scratch);
-     do Main.drawArray(array);  
-  //   do Output.moveCursor(4, 55);
-    // do Output.printInt(Main.nOfLiveNeighbours(array, 1, 1));     
 
-     let changes = 1;
-     while (changes > 0) {
-          let changes = Main.step(array, scratch);
-          let temp = array;
-          let array = scratch;
-          let scratch = temp;
-          do Screen.clearScreen();
-          do Main.drawArray(array);
-          do Output.moveCursor(7, 50);
-          do Output.printInt(changes);
-     }
+     var int seed, i, changes, state, key;
+     var boolean loop;
+     var RandGen randG;
+//     while (true) {
+       let SCALE = 4;
+       let LEFT_PADDING = 20;
+       let TOP_PADDING = 20;
+       let WIDTH = 50;
+       let HEIGHT = 50;
+       let SIZE = WIDTH * HEIGHT;
+       let state = 0;
+       let array = Array.new(SIZE);
+       let scratch = Array.new(SIZE);
+       
+       while (state = 0) {
+          let seed = Main.drawGetSeedScreen();
+          let key = Keyboard.keyPressed();
+          if (key = 32) {
+             let state = 1;
+          }
+       } 
+       while (state = 1) {
+          let randG = RandGen.new(seed);
+          let i = 0;
+          while (i < SIZE) {
+             let array[i] = randG.genBit();
+             let i = i + 1;
+          }
+          do randG.dispose();
+          do Main.setLiveBorder(array);
+          do Main.setLiveBorder(scratch);
+          do Main.drawArray(array);  
+          do Main.printSeed(seed);
+          let loop = true;
+          let changes = 1;
+          while (loop) {
+            let key = Keyboard.keyPressed();
+            if (key = 32) {
+              if (changes = 0) {
+                 let state = 0;
+                 let loop = false;
+              }
+              let changes = Main.step(array, scratch);
+              let temp = array;
+              let array = scratch;
+              let scratch = temp;
+              do Screen.clearScreen();
+              do Main.drawArray(array);
+              do Output.moveCursor(5, 33);
+              do Output.printString("Changes: ");
+              do Output.printInt(changes);
+              do Main.printSeed(seed);
+            }
+         }
+       }
+       do array.dispose();
+       do scratch.dispose();
+    // }
      return;
+  }
+
+   function int drawGetSeedScreen() {
+      var int tick, key;
+      var String s;
+      var boolean loop;
+      let tick = 0;
+      let loop = true;
+      let s = "Press Space to Proceed";
+      do Output.moveCursor(11, 20);
+      do Output.printString(s);
+      do Output.moveCursor(14, 33);
+      while (loop) {
+         let tick = tick + 1;
+         let key = Keyboard.keyPressed();
+         if (key = 32){
+            let loop = false;
+         }
+         if (tick > 32766){
+            let tick = 1;
+         }
+         do Output.printInt(tick);
+      }
+      return tick;
    }
+   function void printSeed(int seed){
+      do Output.moveCursor(8, 33);
+      do Output.printString("Seed: ");
+      do Output.printInt(seed);
+      return;
+   }
+
 
    function void setLiveBorder(Array array) {
       var int x, y;
